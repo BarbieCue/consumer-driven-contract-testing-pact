@@ -36,10 +36,10 @@ class FrontendTest {
                     return runBlocking {
                         val fruits = Frontend(mockServer.getUrl()).getFruits()
                         fruits.shouldBeJsonArray()
-                        fruits.shouldContainJsonKey("[*].amount")
-                        fruits.shouldContainJsonKey("[*].name")
-                        fruits.shouldContainJsonKey("[*].originCountry")
-                        fruits.shouldContainJsonKey("[*].pricePerKilo")
+                        fruits.shouldContainJsonKey("[0].amount")
+                        fruits.shouldContainJsonKey("[0].name")
+                        fruits.shouldContainJsonKey("[0].originCountry")
+                        fruits.shouldContainJsonKey("[0].pricePerKilo")
                         fruits
                     }
                 }
