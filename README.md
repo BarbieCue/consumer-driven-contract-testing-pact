@@ -33,7 +33,8 @@ The provider then gets the contract and verifies that it fulfills the contract.
 
 ## Start the broker
 
-Start the pact broker (`docker-compose.yml`) and then access it via http://localhost.
+Start the pact broker (`docker-compose.yml`) 
+and then access it via **http://localhost**.
 
 ```shell
   docker compose up
@@ -48,14 +49,20 @@ Start the pact broker (`docker-compose.yml`) and then access it via http://local
 The consumers CDC test creates the contract file
 `consumer/build/pacts/Frontend-Backend.json` at runtime.
 So, we only need to run the test,
-easily by building the consumer project via gradle.
+easily by building the consumer project for the first time via gradle.
 Building via gradle is enough, because the gradle `build` task also 
 calls the gradle `test` task.
 
 ```shell
 consumer/gradlew -p consumer build
 ```
+
 ![contract creation](docs/contract_file_creation.jpg)
+
+If gradle skips the `build`, you can run the test explicitly.
+```shell
+consumer/gradlew -p consumer test
+```
 
 The Frontend CDC test does the following:
 
@@ -88,18 +95,29 @@ provider/gradlew -p provider build
 
 ![contract verification](docs/contract_verification.jpg)
 
+If gradle skips the `build`, you can run the test explicitly.
+```shell
+provider/gradlew -p provider test
+```
 
 ## Can I deploy?
 
-By calling the _Can I Deploy_ gradle task,
-the provider team can explicitly ensure once again that it can deploy
-the provider without breaking the consumer.
+By calling the [_Can I Deploy_](https://docs.pact.io/pact_broker/can_i_deploy)
+gradle task, the teams can explicitly ensure that they can deploy
+their services without breaking the other one.
+
+```shell
+consumer/gradlew -p consumer canideploy -P pacticipant='Frontend' -P latest=true
+```
 
 ```shell
 provider/gradlew -p provider canideploy -P pacticipant='Backend' -P latest=true
 ```
 
-
+In this example, we are always using the _latest_ version 
+of the consumer and producer.
+You can select another existing version with the 
+`-P pacticipantVersion=<version>` flag.
 
 # A few notes about CDC
 
