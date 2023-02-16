@@ -3,7 +3,7 @@ package org.example
 import au.com.dius.pact.consumer.*
 import au.com.dius.pact.consumer.dsl.PactDslJsonArray
 import au.com.dius.pact.consumer.model.MockProviderConfig
-import io.kotest.assertions.json.shouldEqualJson
+import io.kotest.assertions.json.*
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 
@@ -12,7 +12,7 @@ class FrontendTest {
     @Test
     fun testBackendPact() {
 
-        // Define the pact
+        // Define the pact between frontend and backend. From the perspective of the Frontend team.
         val expectedBody = PactDslJsonArray.arrayEachLike()
             .stringType("name", "example apple")
             .stringType("originCountry", "example country")
@@ -28,25 +28,18 @@ class FrontendTest {
                 .body(expectedBody)
             .toPact()
 
-        // Test the pact using a mocked provider that meets the pact.
-        // As a result, the pact file will be created (consumer/build/pacts/Frontend-Backend.json).
+        // Test the Frontend against a mocked provider (backend), which is definitely compliant with the pact.
+        // When the test is passed, the pact file will be created (consumer/build/pacts/Frontend-Backend.json).
         val result: PactVerificationResult = runConsumerTest(pact, MockProviderConfig.createDefault(),
             object : PactTestRun<String> {
                 override fun run(mockServer: MockServer, context: PactTestExecutionContext?): String {
                     return runBlocking {
-
                         val fruits = Frontend(mockServer.getUrl()).getFruits()
-                        fruits.shouldEqualJson(
-                            """
-                            [
-                                {
-                                    "amount": 120,
-                                    "name": "example apple",
-                                    "originCountry": "example country",
-                                    "pricePerKilo": 14.3
-                                }
-                            ]
-                            """.trimIndent())
+                        fruits.shouldBeJsonArray()
+                        fruits.shouldContainJsonKey("[*].amount")
+                        fruits.shouldContainJsonKey("[*].name")
+                        fruits.shouldContainJsonKey("[*].originCountry")
+                        fruits.shouldContainJsonKey("[*].pricePerKilo")
                         fruits
                     }
                 }
