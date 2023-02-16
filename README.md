@@ -119,7 +119,7 @@ of the consumer and producer.
 You can select another existing version with the 
 `-P pacticipantVersion=<version>` flag.
 
-# A few notes about CDC
+# A few notes about CDC and Pact
 
 
 ## Teams have to talk to each other
@@ -134,9 +134,17 @@ CDC brings people to the table.
 
 - Tests should have a very small scope
 - Only the communication itself is of interest
-- Responses may have extra fields, but requests may not
+- Responses may have extra fields, but requests may not ([Postel's law](https://docs.pact.io/getting_started/matching/gotchas))
 - You can make use of [provider states](https://docs.pact.io/getting_started/provider_states)
 - Use [helpful versioning](https://docs.pact.io/getting_started/versioning_in_the_pact_broker#best-practices)
+
+
+## Pact Broker
+
+- The Pact Broker exposes a User Interface, on http://localhost in our case
+- You can also interact with the broker via [CLI](https://docs.pact.io/pact_broker/client_cli)
+  i.e. to [create environments](https://docs.pact.io/pact_broker/recording_deployments_and_releases#environments) 
+  or to [tag resources](https://docs.pact.io/pact_broker/tags)
 
 
 
