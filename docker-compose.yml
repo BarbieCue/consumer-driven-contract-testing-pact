@@ -13,7 +13,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  broker_app:
+  pact_broker:
     image: dius/pact-broker
     ports:
       - "80:80"
