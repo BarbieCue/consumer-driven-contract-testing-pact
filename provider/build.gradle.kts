@@ -29,9 +29,6 @@ tasks.test {
 }
 
 pact {
-    reports {
-        defaultReports()
-    }
     broker {
         pactBrokerUrl = "http://localhost"
     }

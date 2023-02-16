@@ -23,9 +23,11 @@ tasks.test {
 }
 
 pact {
+    broker {
+        pactBrokerUrl = "http://localhost"
+    }
     publish {
         pactDirectory = "$rootDir/build/pacts"
-        pactBrokerUrl = "http://localhost"
     }
 }
 
