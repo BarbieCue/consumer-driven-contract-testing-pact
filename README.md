@@ -45,9 +45,9 @@ Start the pact broker (`docker-compose.yml`) and then access it via http://local
 
 ### Create
 
-The consumers CDC unit test creates the contract file
+The consumers CDC test creates the contract file
 `consumer/build/pacts/Frontend-Backend.json` at runtime.
-So, we only need to run the unit test,
+So, we only need to run the test,
 easily by building the consumer project via gradle.
 Building via gradle is enough, because the gradle `build` task also 
 calls the gradle `test` task.
@@ -56,6 +56,12 @@ calls the gradle `test` task.
 consumer/gradlew -p consumer build
 ```
 ![contract creation](docs/contract_file_creation.jpg)
+
+The Frontend CDC test does the following:
+
+- it defines the contract
+- tests the Frontend against a contract-compliant mock provider
+- and if the test passed, it creates the contract file
 
 
 ### Publish 
@@ -71,7 +77,7 @@ consumer/gradlew -p consumer pactPublish
 ## Build and verify the provider
 
 As mentioned above, the gradle `build` task also calls the `test` task.
-Verifying the provider means calling its CDC unit test.
+Verifying the provider means calling its CDC test.
 Thus, building the provider will also test (verify) it.
 And due to our configuration, the verification result is 
 immediately published to the broker.
