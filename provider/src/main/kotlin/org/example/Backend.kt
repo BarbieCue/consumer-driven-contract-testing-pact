@@ -16,6 +16,11 @@ class Backend {
     }
 }
 
+// The backend state.
+// For the sake of simplicity, we use a variable here instead of a database or similar.
+// The value of fruits is changed accordingly by the "States" in the provider test
+var fruits = emptyList<Fruit>()
+
 fun Application.module() {
 
     install(ContentNegotiation) {
@@ -24,12 +29,7 @@ fun Application.module() {
 
     routing {
         get("/fruits") {
-            call.respond(
-                listOf(
-                    Fruit("apple", "germany", 200, 2.34),
-                    Fruit("orange", "spain", 240, 2.02)
-                )
-            )
+            call.respond(fruits)
         }
     }
 }

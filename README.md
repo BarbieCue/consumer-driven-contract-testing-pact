@@ -8,7 +8,7 @@ The term **contract** is synonymous with **pact**.
 
 The _frontend_ as a consumer has a contract with the _backend_ as a provider
 and a contract broker (pact broker) is used as the exchange and documentation place.
-The frontend requests fruits and the backend responds with a (never empty) list of fruits.
+The frontend requests fruits and the backend responds with a possibly empty list of fruits.
 The important thing with CDC is, that the tests are focusing on the exact definitions of both,
 the request and the response.
 
