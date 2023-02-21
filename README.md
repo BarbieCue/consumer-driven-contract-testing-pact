@@ -168,3 +168,4 @@ CDC brings people to the table.
 - [Pact](https://.pact.io)
 - [Writing Consumer Tests](https://docs.pact.io/consumer)
 - [Code With Engineering Playbook about CDC Testing](https://microsoft.github.io/code-with-engineering-playbook/automated-testing/cdc-testing/)
+- [Microservice Testing (martinfowler.com)](https://martinfowler.com/articles/microservice-testing/#testing-contract-introduction)
