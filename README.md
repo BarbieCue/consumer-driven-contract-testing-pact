@@ -102,9 +102,25 @@ provider/gradlew -p provider test
 
 ## Can I deploy?
 
-By calling the [_Can I Deploy_](https://docs.pact.io/pact_broker/can_i_deploy)
-gradle task, the teams can explicitly ensure that they can deploy
-their services without breaking the other one.
+[_Can I Deploy_](https://docs.pact.io/pact_broker/can_i_deploy) 
+is a broker tool, to check if a service can be deployed without breaking the contract partner.
+The check is based on previous verifications of two contract partners and under specification 
+of corresponding version numbers of the contract partners.
+You have several ways to interact with the broker in order to use the tool. Here are two of them.
+
+
+### [Broker CLI](https://docs.pact.io/pact_broker/client_cli)
+
+```shell
+docker run --rm --network="host" -e PACT_BROKER_BASE_URL=http://localhost \
+  pactfoundation/pact-cli:latest \
+  pact-broker can-i-deploy \
+  --pacticipant Backend --version 0.0.1 \
+  --pacticipant Frontend --version 0.0.1
+```
+
+
+### [Gradle Plugin](https://docs.pact.io/implementation_guides/jvm/provider/gradle)
 
 ```shell
 consumer/gradlew -p consumer canideploy -P pacticipant='Frontend' -P latest=true
@@ -114,10 +130,10 @@ consumer/gradlew -p consumer canideploy -P pacticipant='Frontend' -P latest=true
 provider/gradlew -p provider canideploy -P pacticipant='Backend' -P latest=true
 ```
 
-In this example, we are always using the _latest_ version 
-of the consumer and producer.
-You can select another existing version with the 
-`-P pacticipantVersion=<version>` flag.
+In this example, we are always using the _latest_ version of the consumer and producer.
+You can select another existing version with the `-P pacticipantVersion=<version>` flag.
+
+
 
 # A few notes about CDC and Pact
 
