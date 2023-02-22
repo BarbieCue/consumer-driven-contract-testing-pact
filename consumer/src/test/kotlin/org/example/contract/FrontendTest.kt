@@ -4,6 +4,9 @@ import au.com.dius.pact.consumer.*
 import au.com.dius.pact.consumer.dsl.PactDslJsonArray
 import au.com.dius.pact.consumer.model.MockProviderConfig
 import io.kotest.assertions.json.*
+import io.kotest.matchers.shouldBe
+import io.ktor.client.statement.*
+import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
 import org.example.Frontend
 import org.junit.jupiter.api.Test
@@ -26,23 +29,25 @@ class FrontendTest {
                 .path("/fruits")
                 .method("GET")
             .willRespondWith()
-                .status(200)
+                .status(HttpStatusCode.OK.value)
                 .body(expectedBody)
             .toPact()
 
         // Test the Frontend against a mocked provider (backend), which is definitely compliant with the pact.
         // When the test is passed, the pact file will be created (consumer/build/pacts/Frontend-Backend.json).
         val result: PactVerificationResult = runConsumerTest(pact, MockProviderConfig.createDefault(),
-            object : PactTestRun<String> {
-                override fun run(mockServer: MockServer, context: PactTestExecutionContext?): String {
+            object : PactTestRun<HttpResponse> {
+                override fun run(mockServer: MockServer, context: PactTestExecutionContext?): HttpResponse {
                     return runBlocking {
-                        val fruits = Frontend(mockServer.getUrl()).getFruits()
-                        fruits.shouldBeJsonArray()
-                        fruits.shouldContainJsonKey("[0].amount")
-                        fruits.shouldContainJsonKey("[0].name")
-                        fruits.shouldContainJsonKey("[0].originCountry")
-                        fruits.shouldContainJsonKey("[0].pricePerKilo")
-                        fruits
+                        val response = Frontend(mockServer.getUrl()).getFruits()
+                        response.status shouldBe HttpStatusCode.OK
+                        val body = response.bodyAsText()
+                        body.shouldBeJsonArray()
+                        body.shouldContainJsonKey("[0].amount")
+                        body.shouldContainJsonKey("[0].name")
+                        body.shouldContainJsonKey("[0].originCountry")
+                        body.shouldContainJsonKey("[0].pricePerKilo")
+                        response
                     }
                 }
             }
@@ -62,17 +67,18 @@ class FrontendTest {
                 .path("/fruits")
                 .method("GET")
             .willRespondWith()
-                .status(200)
+                .status(HttpStatusCode.OK.value)
                 .body(expectedBody)
             .toPact()
 
         val result: PactVerificationResult = runConsumerTest(pact, MockProviderConfig.createDefault(),
-            object : PactTestRun<String> {
-                override fun run(mockServer: MockServer, context: PactTestExecutionContext?): String {
+            object : PactTestRun<HttpResponse> {
+                override fun run(mockServer: MockServer, context: PactTestExecutionContext?): HttpResponse {
                     return runBlocking {
-                        val fruits = Frontend(mockServer.getUrl()).getFruits()
-                        fruits.shouldBeEmptyJsonArray()
-                        fruits
+                        val response = Frontend(mockServer.getUrl()).getFruits()
+                        response.status shouldBe HttpStatusCode.OK
+                        response.bodyAsText().shouldBeEmptyJsonArray()
+                        response
                     }
                 }
             }

@@ -44,6 +44,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.9.2")
     testImplementation("io.kotest:kotest-assertions-json-jvm:5.5.5")
+    testImplementation("io.kotest:kotest-assertions-core-jvm:5.5.5")
 
     // Pact Junit
     testImplementation("au.com.dius.pact.consumer:junit5:4.4.5")

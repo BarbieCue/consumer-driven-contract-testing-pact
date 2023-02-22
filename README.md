@@ -106,6 +106,11 @@ provider/gradlew -p provider test
 is a broker tool, to check if a service can be deployed without breaking the contract partner.
 The check is based on previous verifications of two contract partners and under specification 
 of corresponding version numbers of the contract partners.
+In a real life project we would additionally specify a deployment or release
+[environment](https://docs.pact.io/pact_broker/can_i_deploy).
+But for the sake of simplicity, we only check the compatibility of service versions in general here.
+Without inclusion of environments.
+
 You have several ways to interact with the broker in order to use the tool. Here are two of them.
 
 

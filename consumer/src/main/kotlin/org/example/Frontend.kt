@@ -11,7 +11,7 @@ import kotlinx.serialization.json.Json
 
 class Frontend(private val backendUrl: String) {
 
-    suspend fun getFruits(): String {
+    suspend fun getFruits(): HttpResponse {
 
         val client = HttpClient(CIO) {
             install(ContentNegotiation) {
@@ -21,10 +21,8 @@ class Frontend(private val backendUrl: String) {
             }
         }
 
-        val response = client.get("$backendUrl/fruits") {
+        return client.get("$backendUrl/fruits") {
             contentType(ContentType.Application.Json)
         }
-
-        return response.bodyAsText()
     }
 }
