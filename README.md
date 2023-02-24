@@ -1,5 +1,8 @@
 # Consumer Driven Contract Testing with Pact.io
 
+<a href="https://www.pact.io/"><img src="docs/pact.png" alt="pact" width="150" /></a>
+
+
 The following scenario is implemented here.
 
 ![scenario](docs/overview.jpg)
