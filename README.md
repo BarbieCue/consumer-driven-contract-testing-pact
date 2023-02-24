@@ -120,8 +120,8 @@ You have several ways to interact with the broker in order to use the tool. Here
 docker run --rm --network="host" -e PACT_BROKER_BASE_URL=http://localhost \
   pactfoundation/pact-cli:latest \
   pact-broker can-i-deploy \
-  --pacticipant Backend --version 0.0.1 \
-  --pacticipant Frontend --version 0.0.1
+  --pacticipant Backend --latest \
+  --pacticipant Frontend --latest
 ```
 
 
@@ -157,7 +157,9 @@ CDC brings people to the table.
 - Only the communication itself is of interest
 - Responses may have extra fields, but requests may not ([Postel's law](https://docs.pact.io/getting_started/matching/gotchas))
 - You can make use of [provider states](https://docs.pact.io/getting_started/provider_states)
-- Use [helpful versioning](https://docs.pact.io/getting_started/versioning_in_the_pact_broker#best-practices)
+- Use [helpful versioning](https://docs.pact.io/getting_started/versioning_in_the_pact_broker#best-practices).
+  For example, use your preferred versioning scheme together with a git hash (i.e. `0.0.1+58d9b448`).
+  
 
 
 ## Pact Broker

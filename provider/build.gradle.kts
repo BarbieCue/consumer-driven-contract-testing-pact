@@ -1,3 +1,5 @@
+import java.io.*
+
 val ktorVersion: String by project
 val kotlinVersion: String by project
 val logbackVersion: String by project
@@ -9,8 +11,17 @@ plugins {
     id("au.com.dius.pact") version "4.3.10"
 }
 
+fun getGitHash(): String {
+    val stdout = ByteArrayOutputStream()
+    exec {
+        commandLine("git", "rev-parse", "--short=8", "HEAD")
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
 group = "org.example"
-version = "0.0.1"
+version = "0.0.1+" + getGitHash()
 application {
     mainClass.set("org.example.BackendKt")
 }
