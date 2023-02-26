@@ -26,6 +26,7 @@ The provider then gets the contract and verifies that it fulfills the contract.
 
 # Prerequisites
 
+- Git
 - Java (Version >=17)
 - Docker Compose V2 to run the Pact Broker
 
