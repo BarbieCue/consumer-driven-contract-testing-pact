@@ -41,8 +41,8 @@ Start the pact broker (`docker-compose.yml`)
 and then access it via **http://localhost**.
 
 ```shell
-  docker compose up
-  ```
+docker compose up
+```
 
 
 ## Create and publish the contract
